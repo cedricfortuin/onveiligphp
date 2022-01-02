@@ -2,52 +2,53 @@
 require "database/database-connection.php";
 
 // get all posts with related replies
-$sql = "SELECT * FROM posts
-        LEFT JOIN users ON posts.user_id = users.id
-        LEFT JOIN replies ON posts.id = replies.post_id ORDER BY posts.id DESC";
+$sql = "SELECT posts.id, posts.title, posts.body, posts.created_at, users.name FROM posts
+        LEFT JOIN users ON posts.user_id = users.id ORDER BY posts.id";
 $result = $db->query($sql);
 
 ?>
 
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-</head>
+<html lang="en" class="bg-primary">
+<?php include "components/guest-head.html"; ?>
 <body>
+<?php include "components/guest-navbar.html"; ?>
 
-<h2>Mooi alle posts op een rijtje</h2>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Slug</th>
-        <th>Content</th>
-        <th>Date</th>
-        <th>Created by</th>
-        <th>Go to post</th>
-    </tr>
-    <?php
-        foreach ($result as $item => $value)
-        {
-            echo "<tr>";
-            echo "<td>".$value['id']."</td>";
-            echo "<td>".$value['title']."</td>";
-            echo "<td>".$value['slug']."</td>";
-            echo "<td>".$value['body']."</td>";
-            echo "<td>".date('d/m/Y', strtotime($value['created_at']))."</td>";
-            echo "<td>".$value['name']."</td>";
-            echo "<td><a href='post.php?postid=".$value['id']."'>Ga naar de mooie post</a></td>";
-            echo "</tr>";
-        }
-    ?>
-</table>
+<h2 class="text-left ml-2">Mooi alle posts op een rijtje</h2>
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Created by</th>
+                    <th scope="col">Go to post</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($result as $item => $value)
+                {
+                    echo "<tr>";
+                    echo "<th scope=\"row\">".$value['id']."</th>";
+                    echo "<td>".$value['title']."</td>";
+                    echo "<td>".$value['body']."</td>";
+                    echo "<td>".date('d/m/Y', strtotime($value['created_at']))."</td>";
+                    echo "<td>".$value['name']."</td>";
+                    echo "<td><a href='post.php?postid=".$value['id']."'>Ga naar de mooie post</a></td>";
+                    echo "</tr>";
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <!--<div style="margin-top: 300000px; text-align: center">-->
 <!--    <p>hehehe got yah</p>-->
@@ -56,5 +57,8 @@ $result = $db->query($sql);
 <!--    </div>-->
 <!--</div>-->
 
+<?php include "components/guest-footer.html"; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

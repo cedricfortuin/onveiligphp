@@ -1,3 +1,3 @@
 # onveiligphp
 
-hahaha mooi veilig op "unsafe.cedricfortuin.com"[http://unsafe.cedricfortuin.com/]
+hahaha mooi veilig op http://unsafe.cedricfortuin.com/

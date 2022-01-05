@@ -71,14 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST["title"];
     $body = $_POST["body"];
 
-
-
     $sql = "INSERT INTO posts (title, body, user_id, image) VALUES ('$title', '$body', '$id', '$image')";
     $mieter = $db->query($sql);
     if ($mieter) {
         echo "<script>window.location.href = 'my-posts.php';</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $db->error;
+        echo "Error: " . $sql . "<br>" . $mieter->error;
     }
 }
 

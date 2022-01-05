@@ -1,6 +1,8 @@
 <?php
 require "database/database-connection.php";
 
+session_start();
+
 // get the post id from the url (very secure)
 $post_id = $_GET['postid'];
 
@@ -42,9 +44,9 @@ foreach ($results as $result) {
                          src="https://eu.ui-avatars.com/api/?name=<?php echo str_replace(' ', '+', $result["name"]) ?>"
                          alt="<?php echo $result["name"] ?>">
                 </div>
-                <div class="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
+                <div class="mt-8 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                     <div class="sm:hidden md:block mt-6 min-w-0 flex-1">
-                        <h1 class="text-2xl font-bold text-gray-900 truncate">
+                        <h1 class="text-3xl font-bold text-gray-900 truncate">
                             <?php echo $result["name"] ?>
                         </h1>
                         <p>Posted on: <?php echo date("d/m/Y", strtotime($result["created_at"])) ?></p>
@@ -68,17 +70,18 @@ foreach ($results as $result) {
 
 
     <div>
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto mb-8">
             <div class="relative mb-8">
                 <div class="absolute inset-0 flex items-center" aria-hidden="true">
                     <div class="w-full border-t border-gray-300"></div>
                 </div>
-                <div class="relative flex justify-start">
-                <span class="pr-3 bg-white text-lg font-medium text-gray-900">
-                  Replies
-                </span>
+                <div class="relative flex items-center justify-between">
+                    <span class="pr-3 bg-white text-lg font-medium text-gray-900">
+                      Replies
+                    </span>
                 </div>
             </div>
+
             <div class="flow-root">
                 <ul role="list" class="-mb-8">
                     <?php
@@ -115,25 +118,59 @@ foreach ($results as $result) {
                     ?>
                 </ul>
             </div>
+
+            <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex items-center justify-between">
+                    <span class="pr-3 bg-white text-lg font-medium text-gray-900">
+                      Reageren haha ik wil niet meer
+                    </span>
+                </div>
+            </div>
+
+            <form action="<?php $_SERVER["PHP_SELF"] ?>" method="POST">
+                <div>
+                    <label for="comment" class="block text-sm font-medium text-gray-700">Add your comment</label>
+                    <div class="mt-1">
+                        <textarea rows="4" name="reply" id="comment" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Fuck you"></textarea>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                            <span>Reageren haha</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
-
-    <!--
-        <p>Wil je reageren? dan heb je pech</p>
-        <form action="reply.php?postid=<?php echo $result["id"] ?>" method="POST">
-            <label for="reply">jk reageer dan l*l</label>
-            <input type="text" id="reply" name="reply">
-            <input type="submit" value="Reageer">
-        </form>
-
-        <h2>Alle replies mooi</h2>
-
-
-        -->
+    <?php include "components/guest-footer.html"; ?>
     </body>
     </html>
     <?php
 }
+?>
 
+
+<?php
+
+$replypost = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    $replypost = $_POST["reply"];
+    $id = $_SESSION["id"];
+    $date = date("Y-m-d H:i:s");
+
+    $sql = "INSERT INTO replies (reply, post_id, user_id, created_at) VALUES ('$replypost', '$post_id', '$id', '$date')";
+    $result = $db->query($sql);
+
+    if ($result)
+    {
+        echo "<script>window.location.href = 'post.php?postid=$post_id';</script>";
+    }
+}
 ?>

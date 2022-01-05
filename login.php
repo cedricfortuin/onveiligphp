@@ -1,4 +1,40 @@
 <?php
+require "database/database-connection.php";
+
+session_start();
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    header("location: index.php");
+    exit;
+}
+
+$email = $password = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    if (!empty($email) && !empty($password))
+    {
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $result = $db->query($sql);
+
+        $password_from_db = $result->fetchColumn(3);
+        $id = $result->fetchColumn(0);
+
+        if ($password == $password_from_db)
+        {
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $id;
+            header("location: index.php");
+            exit;
+        } else {
+            echo "Sql error: " . $sql;
+        }
+    }
+}
+
+
 ?>
 
 <!doctype html>
@@ -6,10 +42,9 @@
 <?php include 'components/guest-head.html'; ?>
 <body class="h-full">
 <?php include 'components/guest-navbar.html'; ?>
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
-            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
                 Ik wil gewoon naar huis🥲
             </h2>

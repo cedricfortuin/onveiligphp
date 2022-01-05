@@ -1,13 +1,18 @@
 <?php
 require "database/database-connection.php";
+include "functions/sanitize-input.php";
+
 
 $name = $password = $email = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $name = sanitizeInput($_POST["name"]);
+    $email = sanitizeInput($_POST["email"]);
+    $password = sanitizeInput($_POST["password"]);
+
+    // hash password
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
     $created_at = date("Y-m-d H:i:s");
 

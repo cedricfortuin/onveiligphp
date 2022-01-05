@@ -1,5 +1,6 @@
 <?php
 require "database/database-connection.php";
+include "functions/sanitize-input.php";
 
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -11,8 +12,8 @@ $email = $password = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $email = sanitizeInput($_POST["email"]);
+    $password = sanitizeInput($_POST["password"]);
 
     if (!empty($email) && !empty($password))
     {

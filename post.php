@@ -1,5 +1,7 @@
 <?php
 require "database/database-connection.php";
+include "functions/sanitize-input.php";
+
 
 session_start();
 
@@ -161,7 +163,7 @@ $replypost = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $replypost = $_POST["reply"];
+    $replypost = sanitizeInput($_POST["reply"]);
     $id = $_SESSION["id"];
     $date = date("Y-m-d H:i:s");
 

@@ -1,5 +1,7 @@
 <?php
 require "database/database-connection.php";
+include "functions/sanitize-input.php";
+
 
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -68,10 +70,10 @@ $title = $body = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_SESSION['id'];
-    $title = $_POST["title"];
-    $body = $_POST["body"];
+    $title = sanitizeInput($_POST["title"]);
+    $body = sanitizeInput($_POST["body"]);
 
-    $sql = "INSERT INTO posts (title, body, user_id, image) VALUES ('$title', '$body', '$id', '$image')";
+    $sql = "INSERT INTO posts (title, body, user_id) VALUES ('$title', '$body', '$id')";
     $mieter = $db->query($sql);
     if ($mieter) {
         echo "<script>window.location.href = 'my-posts.php';</script>";

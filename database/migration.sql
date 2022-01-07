@@ -31,6 +31,7 @@ create table users
     name              varchar not null,
     email             varchar not null,
     password          varchar not null,
+    TwoFA_secret      varchar,
     created_at        datetime
 );
 

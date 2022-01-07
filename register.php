@@ -9,10 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $email = $_POST["email"];
     $password = $_POST["password"];
 
+    // create a 2fa key
+    $secret = bin2hex(openssl_random_pseudo_bytes(16));
+
     $created_at = date("Y-m-d H:i:s");
 
     // insert new user into database
-    $sql = "INSERT INTO users (name, email, password, created_at) VALUES ('$name', '$email', '$password', '$created_at')";
+    $sql = "INSERT INTO users (name, email, password, TwoFA_secret, created_at) VALUES ('$name', '$email', '$password', '$secret', '$created_at')";
     $success = $db->query($sql);
 
     if ($success)

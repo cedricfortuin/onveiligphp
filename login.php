@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
-            header("location: index.php");
+            header("location: 2FA.php");
             exit;
         } else {
             echo "Sql error: " . $sql;

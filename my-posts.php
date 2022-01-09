@@ -10,7 +10,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 // get all posts with related replies
 $id = $_SESSION['id'];
-echo $id ?? 'fuck';
 $sql3 = "SELECT * FROM posts WHERE posts.user_id = '$id'";
 $result3 = $db->query($sql3);
 ?>

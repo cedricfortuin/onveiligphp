@@ -17,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     if ($success)
     {
+        error_log("New user registered: {$name} with email {$email} on {$created_at}.\n\r", 3, ACCOUNT_LOGGING_PATH);
+
         // get user id
         $sql = "SELECT id FROM users WHERE email = '$email'";
         $result = $db->query($sql);

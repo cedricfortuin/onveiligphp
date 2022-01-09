@@ -74,6 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO posts (title, body, user_id, image) VALUES ('$title', '$body', '$id', '$image')";
     $mieter = $db->query($sql);
     if ($mieter) {
+        error_log("UserId {$id} created a post with title {$title} and body {$body} on " . date("Y-m-d H:i:s") . "\n\r", 3, POST_LOGGING_PATH);
+
         echo "<script>window.location.href = 'my-posts.php';</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $mieter->error;

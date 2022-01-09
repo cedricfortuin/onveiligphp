@@ -24,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
         if ($password == $password_from_db)
         {
+            error_log("User {$email} logged in on " . date("Y-m-d H:i:s") . "\n\r", 3, ACCOUNT_LOGGING_PATH);
+
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
             header("location: index.php");

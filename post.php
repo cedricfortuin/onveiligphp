@@ -26,17 +26,6 @@ foreach ($results as $result) {
     <?php include "components/guest-navbar.html"; ?>
 
     <div>
-        <div>
-            <?php
-
-            if (isset($result['image'])) {
-                ?>
-                <img class="h-64 w-full object-cover lg:h-96" src="<?php echo $result['image']; ?>" alt="">
-                <?php
-            }
-            ?>
-
-        </div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div class="flex">
@@ -170,6 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     if ($result)
     {
+        error_log("UserId {$id} has replied to post {$post_id} with {$replypost} on {$date} \n", 3, POST_LOGGING_PATH);
+
         echo "<script>window.location.href = 'post.php?postid=$post_id';</script>";
     }
 }

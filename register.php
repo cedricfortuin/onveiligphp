@@ -76,6 +76,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                             <input type="password" name="password" id="password" class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                         </div>
                     </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 bg-gray-100 py-3 rounded-md">
+                        <label for="2fa" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                            Two Factor Authentication
+                        </label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            <p class="text-sm text-gray-600">
+                                Two Factor Authentication is automatisch enabled.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

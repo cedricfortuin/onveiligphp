@@ -1,5 +1,8 @@
 <?php
 require "database/database-connection.php";
+// require phpmailer from vendor
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
 
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -22,11 +25,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $password_from_db = $result->fetchColumn(3);
         $id = $result->fetchColumn(0);
 
+        // get the 2FA secret from the database
+        $TwoFA_secret = $result->fetchColumn(4);
+        try {
+            // mail the user the 2FA secret
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'cedric.laurent.fortuin@gmail.com';
+            $mail->Password = 'C#2!00#F/1';
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port = 587;
+
+            $mail->setFrom('mail@fuckinc.com', 'Fuck Inc');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
+            $mail->Subject = '2FA Secret';
+
+            // send html button with a link to the 2FA page
+            $mail->Body = '<a href="http://localhost/2FA.php?email='. $email .'&2FA='.$TwoFA_secret.'">Click here to login with 2FA</a>';
+            $mail->send();
+
+        } catch (Exception $e) {
+            echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+        }
+
         if ($password == $password_from_db)
         {
             $_SESSION["loggedin"] = true;
             $_SESSION["id"] = $id;
-            header("location: 2FA.php");
+            header("location: 2FA_wait.php");
             exit;
         } else {
             echo "Sql error: " . $sql;

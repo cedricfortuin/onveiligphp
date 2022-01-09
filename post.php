@@ -13,10 +13,6 @@ $results = $db->query("SELECT * FROM posts
 // get the replies from the post
 $replies = $db->query("SELECT * FROM replies
                                 INNER JOIN users ON replies.user_id = users.id WHERE replies.post_id = $post_id");
-
-?>
-
-<?php
 foreach ($results as $result) {
     ?>
     <!doctype html>
@@ -26,18 +22,7 @@ foreach ($results as $result) {
     <?php include "components/guest-navbar.html"; ?>
 
     <div>
-        <div>
-            <?php
-
-            if (isset($result['image'])) {
-                ?>
-                <img class="h-64 w-full object-cover lg:h-96" src="<?php echo $result['image']; ?>" alt="">
-                <?php
-            }
-            ?>
-
-        </div>
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
             <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div class="flex">
                     <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"

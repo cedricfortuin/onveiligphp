@@ -6,7 +6,8 @@ include "functions/sanitize-input.php";
 session_start();
 
 // get the post id from the url (very secure)
-$post_id = htmlspecialchars($_GET['postid']);
+// make sure the id is not injectable with sql injection
+$post_id = sanitizeInput($_GET['postid']);
 
 // get all data from post table with the related replies and user
 $results = $db->query("SELECT * FROM posts 

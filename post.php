@@ -30,15 +30,15 @@ foreach ($results as $result) {
             <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div class="flex">
                     <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-                         src="https://eu.ui-avatars.com/api/?name=<?php echo str_replace(' ', '+', $result["name"]) ?>"
-                         alt="<?php echo $result["name"] ?>">
+                         src="https://eu.ui-avatars.com/api/?name=<?php echo str_replace(' ', '+', htmlspecialchars($result["name"])) ?>"
+                         alt="<?php echo htmlspecialchars($result["name"]) ?>">
                 </div>
                 <div class="mt-8 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                     <div class="sm:hidden md:block mt-6 min-w-0 flex-1">
                         <h1 class="text-3xl font-bold text-gray-900 truncate">
-                            <?php echo $result["name"] ?>
+                            <?php echo htmlspecialchars($result["name"]) ?>
                         </h1>
-                        <p>Posted on: <?php echo date("d/m/Y", strtotime($result["created_at"])) ?></p>
+                        <p>Posted on: <?php echo date("d/m/Y", strtotime(htmlspecialchars($result["created_at"]))) ?></p>
                     </div>
                 </div>
             </div>
@@ -48,11 +48,11 @@ foreach ($results as $result) {
         <div class="relative px-4 sm:px-6 lg:px-8">
             <div class="text-lg max-w-prose mx-auto">
                 <h1>
-                    <span class="mt-2 block text-3xl text-start leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"><?php echo $result["title"] ?></span>
+                    <span class="mt-2 block text-3xl text-start leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"><?php echo htmlspecialchars($result["title"]) ?></span>
                 </h1>
             </div>
             <div class="mt-6 prose prose-indigo prose-lg text-gray-500 mx-auto max-w-3xl">
-                <?php echo $result["body"] ?>
+                <?php echo htmlspecialchars($result["body"]) ?>
             </div>
         </div>
     </div>
@@ -81,21 +81,21 @@ foreach ($results as $result) {
                                 <div class="relative flex items-start space-x-3">
                                     <div class="relative">
                                         <img class="h-10 w-10 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white"
-                                             src="https://eu.ui-avatars.com/api/?name=<?php echo str_replace(' ', '+', $reply["name"]) ?>"
-                                             alt="<?php echo $reply["name"] ?>">
+                                             src="https://eu.ui-avatars.com/api/?name=<?php echo str_replace(' ', '+', htmlspecialchars($reply["name"])) ?>"
+                                             alt="<?php echo htmlspecialchars($reply["name"]) ?>">
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <div>
                                             <div class="text-sm">
-                                                <p class="font-medium text-gray-900"><?php echo $reply["name"] ?></p>
+                                                <p class="font-medium text-gray-900"><?php echo htmlspecialchars($reply["name"]) ?></p>
                                             </div>
                                             <p class="mt-0.5 text-sm text-gray-500">
-                                                Commented on: <?php echo date("d/m/Y", strtotime($reply["created_at"])) ?>
+                                                Commented on: <?php echo date("d/m/Y", strtotime(htmlspecialchars($reply["created_at"]))) ?>
                                             </p>
                                         </div>
                                         <div class="mt-2 text-sm text-gray-700">
                                             <p>
-                                                <?php echo $reply["reply"] ?>
+                                                <?php echo htmlspecialchars($reply["reply"]) ?>
                                             </p>
                                         </div>
                                     </div>

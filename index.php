@@ -25,7 +25,7 @@ $username = $yeet->fetchColumn(0);
 
 
 <div class="max-w-7xl mx-auto">
-    <p class="mt-5 text-center text-xl text-gray-500">Mooi alle posts op een rijtje (je bent <?php echo $username ?? 'niet ingelogd' ?>)</p>
+    <p class="mt-5 text-center text-xl text-gray-500">Mooi alle posts op een rijtje (je bent <?php echo htmlspecialchars($username) ?? 'niet ingelogd' ?>)</p>
     <div class="relative">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
             <div class="w-full border-t border-gray-300"></div>
@@ -40,11 +40,11 @@ $username = $yeet->fetchColumn(0);
         foreach ($result as $item => $value) {
             ?>
             <li>
-                <a href="post.php?postid=<?php echo $value['id'] ?>" class="block hover:bg-gray-50">
+                <a href="post.php?postid=<?php echo htmlspecialchars($value['id']) ?>" class="block hover:bg-gray-50">
                     <div class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
                             <p class="text-sm font-medium text-indigo-600 truncate">
-                                <?php echo $value['title'] ?>
+                                <?php echo htmlspecialchars($value['title']) ?>
                             </p>
                         </div>
                         <div class="mt-2 sm:flex sm:justify-between">
@@ -56,7 +56,7 @@ $username = $yeet->fetchColumn(0);
                                          aria-hidden="true">
                                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                                     </svg>
-                                    <?php echo $value['name'] ?>
+                                    <?php echo htmlspecialchars($value['name']) ?>
                                 </p>
                             </div>
                             <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
@@ -70,7 +70,7 @@ $username = $yeet->fetchColumn(0);
                                 </svg>
                                 <p>
                                     Posted on
-                                    <?php echo date('d/m/Y', strtotime($value['created_at'])) ?>
+                                    <?php echo date('d/m/Y', strtotime(htmlspecialchars($value['created_at']))) ?>
                                 </p>
                             </div>
                         </div>
@@ -82,15 +82,6 @@ $username = $yeet->fetchColumn(0);
         ?>
     </ul>
 </div>
-
-
-<!--<div style="margin-top: 300000px; text-align: center">-->
-<!--    <p>hehehe got yah</p>-->
-<!--    <div style="width:20rem;height:auto;margin: 0 auto 0 auto;">-->
-<!--        <iframe src="https://giphy.com/embed/Ju7l5y9osyymQ" width="20%" height="20%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>-->
-<!--    </div>-->
-<!--</div>-->
-
 <?php include "components/guest-footer.html"; ?>
 </body>
 </html>

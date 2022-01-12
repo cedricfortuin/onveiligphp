@@ -40,11 +40,11 @@ $result3 = $db->query($sql3);
         foreach ($result3 as $item => $value) {
             ?>
             <li>
-                <a href="post.php?postid=<?php echo $value['id'] ?>" class="block hover:bg-gray-50">
+                <a href="post.php?postid=<?php echo htmlspecialchars($value['id']) ?>" class="block hover:bg-gray-50">
                     <div class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
                             <p class="text-sm font-medium text-indigo-600 truncate">
-                                <?php echo $value['title'] ?>
+                                <?php echo htmlspecialchars($value['title']) ?>
                             </p>
                         </div>
                         <div class="mt-2 sm:flex sm:justify-between">
@@ -59,7 +59,7 @@ $result3 = $db->query($sql3);
                                 </svg>
                                 <p>
                                     Posted on
-                                    <?php echo date('d/m/Y', strtotime($value['created_at'])) ?>
+                                    <?php echo date('d/m/Y', strtotime(htmlspecialchars($value['created_at']))) ?>
                                 </p>
                             </div>
                         </div>

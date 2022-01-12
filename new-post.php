@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST["title"];
     $body = $_POST["body"];
 
-    $sql = "INSERT INTO posts (title, body, user_id, image) VALUES ('$title', '$body', '$id', '$image')";
+    $sql = "INSERT INTO posts (title, body, user_id) VALUES ('$title', '$body', '$id')";
     $mieter = $db->query($sql);
     if ($mieter) {
         error_log("UserId {$id} created a post with title {$title} and body {$body} on " . date("Y-m-d H:i:s") . "\n\r", 3, POST_LOGGING_PATH);
